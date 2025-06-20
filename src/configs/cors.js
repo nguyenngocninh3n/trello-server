@@ -1,10 +1,20 @@
 import ApiError from '@utils/ApiError'
 import { env } from './environment'
 
-var WHITELIST_DOMAINS = ['http://example1.com', 'http://example2.com', 'http://localhost:5173', 'https://trello-web-mauve-nine.vercel.app']
+var WHITELIST_DOMAINS = [
+  'http://example1.com',
+  'http://example2.com',
+  'http://localhost:5173',
+  'https://trello-web-mauve-nine.vercel.app'
+]
 export const corsOptions = {
   origin: function (origin, callback) {
     if (env.BUILD_MODE == 'dev') {
+      return callback(null, true)
+    }
+
+    if (!origin) {
+      // Allow requests with no origin (like mobile apps or curl requests, recall from uptimerobot)
       return callback(null, true)
     }
 
@@ -14,5 +24,5 @@ export const corsOptions = {
 
     return callback(new ApiError(`${origin} is not our CORS policy!`))
   },
-  credentials: true  
+  credentials: true
 }
