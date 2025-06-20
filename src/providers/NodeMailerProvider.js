@@ -2,11 +2,14 @@ import { env } from '@configs/environment'
 import nodemailer from 'nodemailer'
 
 const subject = 'Verify your trello web account!'
-const generateVerificationEmailContent = (recipientEmail, verifyToken) => `
+const generateVerificationEmailContent = (recipientEmail, verifyToken) => {
+  const customPath = env.BUILD_MODE === 'production' ? env.PRODUCTION_CLIENT_HOST : env.LOCAL_CLIENT_HOST
+  return `
   <h1>Hi ${recipientEmail}</h1>
   You has already register an account in trello web with email ${recipientEmail}. 
-  Please click to this url http://localhost:5173/verify?email=${recipientEmail}&token=${verifyToken} to active your account.
+  Please click to this url ${customPath}/verify?email=${recipientEmail}&token=${verifyToken} to active your account.
   `
+}
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
