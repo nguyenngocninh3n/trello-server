@@ -1,12 +1,12 @@
 import { userModel } from '@models/userModel'
 import ApiError from '@utils/ApiError'
-import { BrevoProvider } from 'providers/BrevoProvider'
 import { pickUser } from '@utils/formatter'
 import { JwtProvider } from 'providers/JwtProvider'
 import bcrypt from 'bcryptjs'
 import { StatusCodes } from 'http-status-codes'
 import { v4 } from 'uuid'
 import { CloudinaryProvider } from 'providers/CloudinaryProvider'
+import { NodeMailerProvider } from 'providers/NodeMailerProvider'
 
 const register = async (reqBody) => {
   const { email, password } = reqBody
@@ -24,7 +24,7 @@ const register = async (reqBody) => {
   }
   const created_user = await userModel.createNewUser(newUser)
   const getUser = await userModel.findOneById(created_user.insertedId)
-  BrevoProvider.sendVerifyEmail(getUser.email, getUser.verifyToken)
+  NodeMailerProvider.sendEmail(getUser.email, getUser.verifyToken)
   return pickUser(getUser)
 }
 
