@@ -33,7 +33,7 @@ const update = async (cardId, cardCoverFile, updateData, userInfo) => {
   if (cardCoverFile) {
     const uploadFile = await CloudinaryProvider.uploadFile('cards', cardCoverFile.buffer)
     const customData = { ...update, cover: uploadFile.secure_url }
-    card = await cardModel.updateCard(userId, cardId, customData)
+    card = await cardModel.updateCard(cardId, customData)
   } else if (updateData.commentToCard) {
     const customComment = {
       ...updateData.commentToCard,
@@ -51,7 +51,7 @@ const update = async (cardId, cardCoverFile, updateData, userInfo) => {
       throw new ApiError('Invid action of card!', StatusCodes.BAD_REQUEST)
     }
   } else {
-    card = await cardModel.updateCard(userId, cardId, updateData)
+    card = await cardModel.updateCard(cardId, updateData)
   }
   return card
 }

@@ -41,7 +41,7 @@ const createNewCard = async (data) => {
   }
 }
 
-const updateCard = async (userId, cardId, updatedData) => {
+const updateCard = async (cardId, updatedData) => {
   if (updatedData['columnId']) {
     updatedData.columnId = ObjectId.createFromHexString(updatedData.columnId.toString())
   }
