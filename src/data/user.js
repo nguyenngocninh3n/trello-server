@@ -1,0 +1,72 @@
+const listUsers =[
+  {
+    _id: 'user_001',
+    email: 'admin@trello.com',
+    password: '$2b$10$hashed_password_here',
+    username: 'admin',
+    display_name: 'Administrator',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400',
+    role: 'admin',
+    verify_token: null,
+    is_active: true,
+    _destroy: false,
+    created_at: '2024-01-01T00:00:00Z',
+    updated_at: '2024-01-01T00:00:00Z'
+  },
+  {
+    _id: 'user_002',
+    email: 'john.doe@company.com',
+    password: '$2b$10$hashed_password_here',
+    username: 'johndoe',
+    display_name: 'John Doe',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400',
+    role: 'user',
+    verify_token: null,
+    is_active: true,
+    _destroy: false,
+    created_at: '2024-01-15T08:30:00Z',
+    updated_at: '2024-01-15T08:30:00Z'
+  },
+  {
+    _id: 'user_003',
+    email: 'jane.smith@company.com',
+    password: '$2b$10$hashed_password_here',
+    username: 'janesmith',
+    display_name: 'Jane Smith',
+    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b5c5?w=400',
+    role: 'user',
+    verify_token: null,
+    is_active: true,
+    _destroy: false,
+    created_at: '2024-01-20T10:15:00Z',
+    updated_at: '2024-01-20T10:15:00Z'
+  },
+  {
+    _id: 'user_004',
+    email: 'mike.wilson@company.com',
+    password: '$2b$10$hashed_password_here',
+    username: 'mikewilson',
+    display_name: 'Mike Wilson',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400',
+    role: 'user',
+    verify_token: null,
+    is_active: true,
+    _destroy: false,
+    created_at: '2024-02-01T14:20:00Z',
+    updated_at: '2024-02-01T14:20:00Z'
+  },
+  {
+    _id: 'user_005',
+    email: 'sarah.brown@company.com',
+    password: '$2b$10$hashed_password_here',
+    username: 'sarahbrown',
+    display_name: 'Sarah Brown',
+    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400',
+    role: 'user',
+    verify_token: null,
+    is_active: true,
+    _destroy: false,
+    created_at: '2024-02-10T09:45:00Z',
+    updated_at: '2024-02-10T09:45:00Z'
+  }
+]

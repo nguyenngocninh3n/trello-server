@@ -12,21 +12,26 @@ import { StatusCodes } from 'http-status-codes'
 import { userModel } from './userModel'
 
 const BOARD_COLLECTION_NAME = 'boards'
-const BOARD_COLLECTION_SCHEME = Joi.object({
+
+const BOARD_COLLECTION_SCHEMA = Joi.object({
   title: Joi.string().required().min(5).max(50).trim().strict(),
-  slug: Joi.string().min(3).trim().strict(),
   description: Joi.string().optional().min(5).max(256).trim().strict(),
+  slug: Joi.string().min(3).trim().strict(),
   type: Joi.string().required().valid(BOARD_TYPES.PUBLIC, BOARD_TYPES.PRIVATE).strict(),
   columnOrderIds: Joi.array().items(Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE)).default([]),
   ownerIds: Joi.array().items(Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE)).default([]),
   memberIds: Joi.array().items(Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE)).default([]),
+  labelId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE).allow(null).default(null),
+  isTemplate: Joi.boolean().default(false),
+  copyLength: Joi.number().integer().min(0).default(0),
+  viewLength: Joi.number().integer().min(0).default(0),
   createdAt: Joi.date().timestamp('javascript').default(Date.now),
   updatedAt: Joi.date().timestamp('javascript').default(null),
   _destroy: Joi.boolean().default(false)
 })
 
 const validateBoard = async (data) => {
-  return await BOARD_COLLECTION_SCHEME.validateAsync(data)
+  return await BOARD_COLLECTION_SCHEMA.validateAsync(data)
 }
 
 const createNewBoard = async (userId, data) => {
@@ -198,7 +203,7 @@ const pushMemberToBoard = async (boardId, userId) => {
 
 export const boardModel = {
   BOARD_COLLECTION_NAME,
-  BOARD_COLLECTION_SCHEME,
+  BOARD_COLLECTION_SCHEMA,
   validateBoard,
   createNewBoard,
   findById,

@@ -5,16 +5,40 @@ import Joi from 'joi'
 import { ObjectId } from 'mongodb'
 
 const CARD_COLLECTION_NAME = 'cards'
+
 const CARD_COLLECTION_SCHEMA = Joi.object({
   boardId: Joi.string().required().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
   columnId: Joi.string().required().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
-
+  startDate: Joi.date().timestamp('javascript').default(null),
+  dueDate: Joi.date().timestamp('javascript').default(null),
   title: Joi.string().required().min(3).max(50).trim().strict(),
   description: Joi.string().default(null),
+  isCompleted: Joi.boolean().default(false),
+  attachments: Joi.array().items(
+    Joi.object({
+      attachmentId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
+      url: Joi.string().required(),
+      name: Joi.string().required(),
+      uploadedAt: Joi.date().timestamp('javascript').default(Date.now)
+    })
+  ),
+  checklists: Joi.array()
+    .items(
+      Joi.object({
+        checklistItemId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
+        content: Joi.string().required().min(1).max(256).trim().strict(),
+        isCompleted: Joi.boolean().default(false),
+        createdAt: Joi.date().timestamp('javascript').default(Date.now),
+        updatedAt: Joi.date().timestamp('javascript').default(null)
+      })
+    )
+    .default([]),
+  labelId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE).allow(null).default(null),
   cover: Joi.string().default(null),
   memberIds: Joi.array().items(Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE)).default([]),
   comments: Joi.array()
     .items({
+      commentId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
       userId: Joi.string().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
       userEmail: Joi.string().pattern(EMAIL_RULE).message(EMAIL_RULE_MESSAGE),
       userAvatar: Joi.string(),
